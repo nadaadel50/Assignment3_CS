@@ -1,5 +1,4 @@
 #include "Machine.h"
-
 #include <fstream>
 #include <bits/stdc++.h>
 
@@ -19,7 +18,6 @@ int main() {
     c.input_reg(memo);
     c.printReg(c.getReg());
     c.printstr(c.getstr());
-
-
-
+    
 }
+
