@@ -101,7 +101,17 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
             }
             int res=static_cast<int>(ans.to_ulong());    //to convert from unsigned long integer into integer
 
-            reg.push_back(make_pair(it.second.first , res));
+            bool k = false;
+            for (int i = 0; i < reg.size(); ++i) {
+                if (reg[i].first == it.second.first) {
+                    reg[i].second = res;
+                    k = true;
+                    break;
+                }
+            }
+            if (k == false) {
+                reg.push_back(make_pair(it.second.first, res));
+            }
 
         }
     }
