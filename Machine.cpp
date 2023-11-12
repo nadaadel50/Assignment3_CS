@@ -1,7 +1,7 @@
 #include "memory.h"
 #include <bits/stdc++.h>
 #include <utility> // for pair
-
+#include "Machine.h"
 #include<bitset>   //for converting to binary representation
 
 using namespace std;
@@ -24,6 +24,8 @@ void input:: inputMemory(vector<pair<string,pair<string,string>>>& memo) {
                 thirdPart = thirdPart.substr(2);
             }
             memo.push_back(make_pair(firstPart, make_pair(secondPart, thirdPart)));
+            Jumpv.push_back(counter);
+            counter += 2;
         }
     }
     inputFile.close();
@@ -35,50 +37,54 @@ void input::printMemory(const vector<pair<string, pair<string, string>>>& memo){
     }
 }
 
-
 void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
-    for (const auto &it: memo) {
-        if (it.first == "2") { //store
-            int ss = stoi(it.second.second);
+    //for (const auto &it: memo) {
+    auto it = memo.begin();
+    while(it != memo.end()){
+        if (it->first == "2") { //store
+            int ss = stoi(it->second.second);
             if (reg.empty()) {
-                reg.push_back(make_pair(it.second.first, ss));
+                reg.push_back(make_pair(it->second.first, ss));
             } else {
                 bool k = false;
                 for (int i = 0; i < reg.size(); ++i) {
-                    if (reg[i].first == it.second.first) {
+                    if (reg[i].first == it->second.first) {
                         reg[i].second = ss;
                         k = true;
                         break;
                     }
                 }
                 if (k == false) {
-                    reg.push_back(make_pair(it.second.first, ss));
+                    reg.push_back(make_pair(it->second.first, ss));
                 }
             }
-
         }
-        else if (it.first == "3") {   //from register to memory
+        else if (it->first == "3") {   //from register to memory
             for (const auto &pair: reg) {
-                if (pair.first == it.second.first) {
-                    storage.push_back(make_pair(it.second.second, pair.second));
+                if (pair.first == it->second.first && it->second.second != "00") {
+                    storage.push_back(make_pair(it->second.second, pair.second));
+                }
+                else if(it->second.second == "00"){
+                    if(pair.first == it->second.first){
+                        cout << "3R00 --> " <<"Register " << pair.first << " contains "<< pair.second << endl;
+                    }
                 }
             }
         }
-
-        else if (it.first == "1") {   //from memory to register
+        else if (it->first == "1") {   //from memory to register
             for (const auto &pair: storage) {
-                if (pair.first == it.second.second) {
+                if (pair.first == it->second.second) {
                     int s = pair.second;
-                    reg.push_back(make_pair(it.second.first, s));
+                    reg.push_back(make_pair(it->second.first, s));
                 }
             }
         }
-        else if(it.first == "5"){
+        else if(it->first == "5"){
             int r1;
             int r2;
             const int SIZE =32;   //for 32 bits
-            char w1=it.second.second[0];
-            char w2=it.second.second[1];
+            char w1=it->second.second[0];
+            char w2=it->second.second[1];
 
             for (const auto &pair: reg) {
                 if (pair.first[0]==w1) {
@@ -101,26 +107,53 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
             }
             int res=static_cast<int>(ans.to_ulong());    //to convert from unsigned long integer into integer
 
+            reg.push_back(make_pair(it->second.first , res));
             bool k = false;
             for (int i = 0; i < reg.size(); ++i) {
-                if (reg[i].first == it.second.first) {
+                if (reg[i].first == it->second.first) {
                     reg[i].second = res;
                     k = true;
                     break;
                 }
             }
             if (k == false) {
-                reg.push_back(make_pair(it.second.first, res));
+                reg.push_back(make_pair(it->second.first, res));
             }
-
         }
+        else if(it->first == "B") {
+            int reg0, regR;
+            for(const auto& pair: reg){
+                if(pair.first == "0"){
+                    reg0 = pair.second;
+                }
+                if(pair.first == it->second.first){
+                    regR = pair.second;
+                }
+            }
+            if(regR == reg0){
+                string newmem = it->second.second;
+                int destination = stoi(newmem);
+                int index = destination / 2;
+                if(index >= 0 && index < memo.size()){
+                    it = memo.begin() + index;
+                }
+                else{
+                    cout << "Invalid jump destination" << endl;
+                }
+            }
+        }
+        else if(it->first == "C"){
+            cout << "HALT" << endl;
+            break;
+        }
+        it++;
     }
 }
 
 void cpu::printReg(const vector<pair<string ,int>>& reg){
     cout<<"-------------------------------------------\n";
 
-    cout<<"Rigestr is: \n";
+    cout<<"Register is: \n";
     for (const auto& it : reg) {
         cout << "First Part: " << it.first << " Second Part: " << it.second<< endl;
     }
@@ -139,3 +172,5 @@ const vector<pair<string ,int>>&cpu::getReg()const{
 const vector<pair<string ,int>>&cpu::getstr()const{
     return storage;
 }
+
+
