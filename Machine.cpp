@@ -1,6 +1,8 @@
-#include "Machine.h"
+#include "memory.h"
 #include <bits/stdc++.h>
 #include <utility> // for pair
+
+#include<bitset>   //for converting to binary representation
 
 using namespace std;
 
@@ -71,6 +73,37 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
                 }
             }
         }
+        else if(it.first == "5"){
+            int r1;
+            int r2;
+            const int SIZE =32;   //for 32 bits
+            char w1=it.second.second[0];
+            char w2=it.second.second[1];
+
+            for (const auto &pair: reg) {
+                if (pair.first[0]==w1) {
+                    r1 = pair.second;
+                }
+                if(pair.first[0]==w2){
+                    r2=pair.second;
+                }
+            }
+
+            bitset<SIZE>first_number(r1);  //convert to 2's complement
+            bitset<SIZE>second_number(r2);
+
+            //to convert the two numbers into unsigned long integer so that we can do the addition
+            //+1 to keep a space if was any overflow
+
+            bitset<SIZE+1>ans = first_number.to_ulong() + second_number.to_ulong();
+            if(ans.test(SIZE)){                  //check for overflow
+                cout<<"There is an overflow ."<<endl;
+            }
+            int res=static_cast<int>(ans.to_ulong());    //to convert from unsigned long integer into integer
+
+            reg.push_back(make_pair(it.second.first , res));
+
+        }
     }
 }
 
@@ -96,4 +129,3 @@ const vector<pair<string ,int>>&cpu::getReg()const{
 const vector<pair<string ,int>>&cpu::getstr()const{
     return storage;
 }
-
