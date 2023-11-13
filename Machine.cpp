@@ -59,6 +59,7 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
                 }
             }
         }
+        //------------------------------------------------------------------------
         else if (it->first == "3") {   //from register to memory
             for (const auto &pair: reg) {
                 if (pair.first == it->second.first && it->second.second != "00") {
@@ -71,6 +72,7 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
                 }
             }
         }
+        //------------------------------------------------------------------------
         else if (it->first == "1") {   //from memory to register
             for (const auto &pair: storage) {
                 if (pair.first == it->second.second) {
@@ -79,6 +81,38 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
                 }
             }
         }
+        //------------------------------------------------------------------------
+        else if (it->first == "4") {   //from memory to register
+
+            string s1;
+            s1=it->second.second[0];
+            string s2;
+            s2=it->second.second[1];
+
+            bool exist= false;
+            for (const auto &pair: reg) {
+                if (pair.first == s1) {
+                    int s=pair.second;
+                    exist= true;
+                    bool k = false;
+                    for (int i = 0; i < reg.size(); ++i) {
+                        if (reg[i].first == s2) {
+                            reg[i].second = pair.second;
+                            k = true;
+                            break;
+                        }
+                    }
+                    if (k == false) {
+                        reg.push_back(make_pair(s2, s));
+                    }
+                }
+            }
+            if(exist== false){
+                cout<<"Register "<<s1<<" doesnot exist\n";
+            }
+
+        }
+        //------------------------------------------------------------------------
         else if(it->first == "5"){
             int r1;
             int r2;
@@ -107,7 +141,6 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
             }
             int res=static_cast<int>(ans.to_ulong());    //to convert from unsigned long integer into integer
 
-            reg.push_back(make_pair(it->second.first , res));
             bool k = false;
             for (int i = 0; i < reg.size(); ++i) {
                 if (reg[i].first == it->second.first) {
@@ -120,6 +153,7 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
                 reg.push_back(make_pair(it->second.first, res));
             }
         }
+        //------------------------------------------------------------------------
         else if(it->first == "B") {
             int reg0, regR;
             for(const auto& pair: reg){
@@ -142,6 +176,7 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
                 }
             }
         }
+        //-------------------------------------------------------------------
         else if(it->first == "C"){
             cout << "HALT" << endl;
             break;
