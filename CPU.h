@@ -1,39 +1,34 @@
-/*class CPU {
-protected:
-    int counter = 0;
-
-public:
-    int registers[16];
-    int ProgramCounter; //keeps track of our instruction cycle
-    int InstructionRegister; //loads our instructions from memory
-    int Accumulator;
-
-};
-*/
-#include <iostream>
 #include<bits/stdc++.h>
-#include <string>
-#include <vector>
 #include <utility> // for pair
-//#include "memory.h"
 using namespace std;
+
+class input{
+protected:
+    vector<string>v;
+    vector<pair<string,pair<string,string>>>memo;
+    vector<int>Jumpv;
+    int counter = 0;
+public:
+    void inputMemory(vector<pair<string,pair<string,string>>>& memo);
+    void printMemory(const vector<pair<string, pair<string, string>>>& memo);
+};
 
 
 class cpu {
 protected:
-    vector<pair<int , int >>reg;
-    vector<pair<string, int >>storage;
+    vector<pair<string , string >>reg;
+    vector<pair<string, string >>storage;
+    vector<int>Jumpv;
+    int counter = 0;
+
 public:
     void input_reg(vector<pair<string,pair<string,string>>>& memo);
-   // void input_storage(vector<pair<string,pair<string,string>>>& memo);
-    void printReg(const   vector<pair<int , int >>& reg);
-    const vector<pair<int,int>>&getReg()const;
+
+    void printReg(const   vector<pair<string , string >>& reg);
+    void printstr(const   vector<pair<string , string >>& storage);
+
+    const vector<pair<string ,string>>&getReg()const;
+    const vector<pair<string ,string>>&getstr()const;
+
 
 };
-
-
-
-
-
-
-
