@@ -57,7 +57,7 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
                 }
             }
         }
-        //------------------------------------------------------------------------
+            //------------------------------------------------------------------------
         else if (it->first == "3") {   //from register to memory
             for (const auto &pair: reg) {
                 if (pair.first == it->second.first && it->second.second != "00") {
@@ -70,7 +70,7 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
                 }
             }
         }
-        //------------------------------------------------------------------------
+            //------------------------------------------------------------------------
         else if (it->first == "1") {   //from memory to register
             for (const auto &pair: storage) {
                 if (pair.first == it->second.second) {
@@ -89,7 +89,7 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
                 }
             }
         }
-        //------------------------------------------------------------------------
+            //------------------------------------------------------------------------
         else if (it->first == "4") {   //from memory to register
 
             string s1;
@@ -120,7 +120,7 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
             }
 
         }
-        //------------------------------------------------------------------------
+            //------------------------------------------------------------------------
         else if(it->first == "5"){
             int r1=0;
             int r2=0;
@@ -205,29 +205,29 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
             }
         }
 //        //------------------------------------------------------------------------
-//        else if(it->first == "B") {
-//            int reg0, regR;
-//            for(const auto& pair: reg){
-//                if(pair.first == "0"){
-//                    reg0 = pair.second;
-//                }
-//                if(pair.first == it->second.first){
-//                    regR = pair.second;
-//                }
-//            }
-//            if(regR == reg0){
-//                string newmem = it->second.second;
-//                int destination = stoi(newmem);
-//                int index = destination / 2;
-//                if(index >= 0 && index < memo.size()){
-//                    it = memo.begin() + index;
-//                }
-//                else{
-//                    cout << "Invalid jump destination" << endl;
-//                }
-//            }
-//        }
-        //-------------------------------------------------------------------
+       else if(it->first == "B") {
+            string reg0, regR;
+            for(const auto& pair: reg){
+                if(pair.first == "0"){
+                    reg0 = pair.second;
+                }
+                if(pair.first == it->second.first){
+                    regR = pair.second;
+                }
+            }
+            if(regR == reg0){
+                string newmem = it->second.second;
+                int destination = stoi(newmem);
+                int index = destination / 2;
+                if(index >= 0 && index < memo.size()){
+                    it = memo.begin() + index;
+                }
+                else{
+                    cout << "Invalid jump destination" << endl;
+                }
+            }
+        }
+            //-------------------------------------------------------------------
         else if(it->first == "C"){
             cout << "HALT" << endl;
             break;
@@ -258,3 +258,5 @@ const vector<pair<string ,string>>&cpu::getReg()const{
 const vector<pair<string ,string>>&cpu::getstr()const{
     return storage;
 }
+
+
