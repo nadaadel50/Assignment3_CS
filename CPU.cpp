@@ -205,28 +205,28 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
             }
         }
 //        //------------------------------------------------------------------------
-       else if(it->first == "B") {
-            string reg0, regR;
-            for(const auto& pair: reg){
-                if(pair.first == "0"){
-                    reg0 = pair.second;
-                }
-                if(pair.first == it->second.first){
-                    regR = pair.second;
-                }
-            }
-            if(regR == reg0){
-                string newmem = it->second.second;
-                int destination = stoi(newmem);
-                int index = destination / 2;
-                if(index >= 0 && index < memo.size()){
-                    it = memo.begin() + index;
-                }
-                else{
-                    cout << "Invalid jump destination" << endl;
-                }
-            }
-        }
+//        else if(it->first == "B") {
+//            int reg0, regR;
+//            for(const auto& pair: reg){
+//                if(pair.first == "0"){
+//                    reg0 = pair.second;
+//                }
+//                if(pair.first == it->second.first){
+//                    regR = pair.second;
+//                }
+//            }
+//            if(regR == reg0){
+//                string newmem = it->second.second;
+//                int destination = stoi(newmem);
+//                int index = destination / 2;
+//                if(index >= 0 && index < memo.size()){
+//                    it = memo.begin() + index;
+//                }
+//                else{
+//                    cout << "Invalid jump destination" << endl;
+//                }
+//            }
+//        }
             //-------------------------------------------------------------------
         else if(it->first == "C"){
             cout << "HALT" << endl;
