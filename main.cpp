@@ -5,7 +5,8 @@
 using namespace std;
 int main() {
     vector<pair<string, pair<string, string>>> memo;
-
+    vector<int>Jumpv;
+    vector<string>hexVector;
     input mem;
     mem.inputMemory(memo);
     mem.printMemory(memo);
@@ -15,9 +16,9 @@ int main() {
 //    ,{'E',0},{'F',0}};
     vector<pair<string, int >>storage;
     cpu c;
-    c.input_reg(memo);
+    c.input_reg(memo, hexVector);
     c.printReg(c.getReg());
     c.printstr(c.getstr());
-    
+
 }
 
