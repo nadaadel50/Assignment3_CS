@@ -31,5 +31,3 @@ public:
 
     bool size_of_storage(const   vector<pair<string , string >>& storage);
 };
-
-
