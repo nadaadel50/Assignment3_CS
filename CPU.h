@@ -30,5 +30,7 @@ public:
     const vector<pair<string ,string>>&getReg()const;
     const vector<pair<string ,string>>&getstr()const;
 
+    bool size_of_storage(const   vector<pair<string , string >>& storage);
+
 
 };
