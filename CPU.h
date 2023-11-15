@@ -10,7 +10,7 @@ protected:
     vector<string>hexVector;
     int counter = 0;
 public:
-    void inputMemory(vector<pair<string,pair<string,string>>>& memo);
+    void inputMemory(vector<pair<string,pair<string,string>>>& memo, vector<int>&Jumpv, vector<string>&hexVector);
     void printMemory(const vector<pair<string, pair<string, string>>>& memo);
 };
 
@@ -31,4 +31,5 @@ public:
 
     bool size_of_storage(const   vector<pair<string , string >>& storage);
 };
+
 
