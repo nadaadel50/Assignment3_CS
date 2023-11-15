@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void input:: inputMemory(vector<pair<string,pair<string,string>>>& memo) {
+void input:: inputMemory(vector<pair<string,pair<string,string>>>& memo, vector<int>&Jumpv, vector<string>&hexVector) {
     ifstream inputFile("text.txt");
     string line;
 
@@ -50,11 +50,6 @@ void input::printMemory(const vector<pair<string, pair<string, string>>>& memo){
 }
 
 void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo, vector<string>&hexVector) {
-    ///////////////////////////////////////////////////////////////////////////////////////////////
-    for (const string& hexValue : hexVector) {
-        cout << hexValue << " ";
-    }
-    ////////////////////////////////////////////////////////////////////////////////////////////////
     //for (const auto &it: memo) {
     auto it = memo.begin();
     while(it != memo.end()){
@@ -242,6 +237,7 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo, vector<stri
                 auto itr = find(hexVector.begin(), hexVector.end(), newmem);
                 if (itr != hexVector.end()) {
                     int index = distance(hexVector.begin(), itr);
+                    cout << index << endl;
                     it = memo.begin() + index;
                 }
                 else{
@@ -290,6 +286,9 @@ const vector<pair<string ,string>>&cpu::getReg()const{
 const vector<pair<string ,string>>&cpu::getstr()const{
     return storage;
 }
+
+
+
 
 
 
