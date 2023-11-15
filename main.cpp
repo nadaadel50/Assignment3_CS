@@ -8,7 +8,7 @@ int main() {
     vector<int>Jumpv;
     vector<string>hexVector;
     input mem;
-    mem.inputMemory(memo);
+    mem.inputMemory(memo, Jumpv, hexVector);
     mem.printMemory(memo);
 
     vector<pair<string , int >>reg;
