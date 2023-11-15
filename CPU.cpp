@@ -1,4 +1,4 @@
-#include "cpu.h"
+#include "Machine.h"
 #include <bits/stdc++.h>
 #include <utility> // for pair
 
@@ -26,6 +26,20 @@ void input:: inputMemory(vector<pair<string,pair<string,string>>>& memo) {
             counter += 2;
         }
     }
+    for (int digit : Jumpv) {
+        stringstream stream;
+        stream << hex << uppercase <<digit;
+        if(stream.str().size() == 1){
+            hexVector.push_back("0" + stream.str());
+        }
+        else{
+            hexVector.push_back(stream.str());
+        }
+    }
+    for (const string& hexValue : hexVector) {
+        cout << hexValue << " ";
+    }
+    cout << endl;
     inputFile.close();
 }
 
@@ -35,7 +49,12 @@ void input::printMemory(const vector<pair<string, pair<string, string>>>& memo){
     }
 }
 
-void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
+void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo, vector<string>&hexVector) {
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    for (const string& hexValue : hexVector) {
+        cout << hexValue << " ";
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
     //for (const auto &it: memo) {
     auto it = memo.begin();
     while(it != memo.end()){
@@ -208,28 +227,28 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
             }
         }
 //        //------------------------------------------------------------------------
-//        else if(it->first == "B") {
-//            int reg0, regR;
-//            for(const auto& pair: reg){
-//                if(pair.first == "0"){
-//                    reg0 = pair.second;
-//                }
-//                if(pair.first == it->second.first){
-//                    regR = pair.second;
-//                }
-//            }
-//            if(regR == reg0){
-//                string newmem = it->second.second;
-//                int destination = stoi(newmem);
-//                int index = destination / 2;
-//                if(index >= 0 && index < memo.size()){
-//                    it = memo.begin() + index;
-//                }
-//                else{
-//                    cout << "Invalid jump destination" << endl;
-//                }
-//            }
-//        }
+        else if(it->first == "B") {
+            string reg0, regR;
+            for(const auto& pair: reg){
+                if(pair.first == "0"){
+                    reg0 = pair.second;
+                }
+                if(pair.first == it->second.first){
+                    regR = pair.second;
+                }
+            }
+            if(regR == reg0){
+                string newmem = it->second.second;
+                auto itr = find(hexVector.begin(), hexVector.end(), newmem);
+                if (itr != hexVector.end()) {
+                    int index = distance(hexVector.begin(), itr);
+                    it = memo.begin() + index;
+                }
+                else{
+                    cout << "Invalid jump destination" << endl;
+                }
+            }
+        }
             //-------------------------------------------------------------------
         else if(it->first == "C"){
             cout << "HALT" << endl;
@@ -271,3 +290,6 @@ const vector<pair<string ,string>>&cpu::getReg()const{
 const vector<pair<string ,string>>&cpu::getstr()const{
     return storage;
 }
+
+
+
