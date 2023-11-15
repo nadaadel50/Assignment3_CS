@@ -1,4 +1,4 @@
-#include "Machine.h"
+#include "cpu.h"
 #include <bits/stdc++.h>
 #include <utility> // for pair
 
@@ -61,7 +61,10 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo) {
         else if (it->first == "3") {   //from register to memory
             for (const auto &pair: reg) {
                 if (pair.first == it->second.first && it->second.second != "00") {
-                    storage.push_back(make_pair(it->second.second, pair.second));
+                    size_of_storage(storage);
+                    if(size_of_storage(storage)) {
+                        storage.push_back(make_pair(it->second.second, pair.second));
+                    }
                 }
                 else if(it->second.second == "00"){
                     if(pair.first == it->second.first){
@@ -252,11 +255,19 @@ void cpu::printstr(const vector<pair<string ,string>>& storage){
     }
 }
 
+bool cpu::size_of_storage(const vector<pair<std::string, std::string>> &storage) {
+    if(storage.size()>256){
+        cout<<"The storage is full ! "<<endl;
+        return  false;
+    }
+    else{
+        return true;
+    }
+}
+
 const vector<pair<string ,string>>&cpu::getReg()const{
     return reg;
 }
 const vector<pair<string ,string>>&cpu::getstr()const{
     return storage;
 }
-
-
