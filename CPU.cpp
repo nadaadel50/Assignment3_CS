@@ -158,6 +158,7 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo, vector<stri
                             r1=r1+s*(pair.second[i]-'A'+10);
                         }
                         s=s*16;
+
                     }
 
                 }
@@ -211,7 +212,6 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo, vector<stri
                 result+= vv[i];
             }
 
-
             bool k = false;
             for (int i = 0; i < reg.size(); ++i) {
                 if (reg[i].first == it->second.first) {
@@ -241,7 +241,6 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo, vector<stri
                 if (itr != hexVector.end()) {
                     int index = distance(hexVector.begin(), itr);
                     it = memo.begin() + index;
-                    continue;
                 }
                 else{
                     cout << "Invalid jump destination" << endl;
@@ -250,7 +249,6 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo, vector<stri
         }
             //-------------------------------------------------------------------
         else if(it->first == "C"){
-            cout << "HALT" << endl;
             break;
         }
         it++;
@@ -289,10 +287,3 @@ const vector<pair<string ,string>>&cpu::getReg()const{
 const vector<pair<string ,string>>&cpu::getstr()const{
     return storage;
 }
-
-
-
-
-
-
-
