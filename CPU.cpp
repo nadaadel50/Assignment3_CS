@@ -192,21 +192,25 @@ void cpu:: input_reg(vector<pair<string,pair<string,string>>>& memo, vector<stri
             //convert from decimal to hexa
             string result;
             int l=0,temp;
-            char hexa[100];
+            vector<char>vv;
             while(res!=0){
                 temp=res%16;
                 if(temp<10){
-                    hexa[l]=temp+48;
+                    vv.push_back(temp+48);
                 }
                 else{
-                    hexa[l]=temp+55;
+                    vv.push_back(temp+55);
                 }
                 l++;
                 res/=16;
             }
-            for (int i = 1; i >=0; --i) {
-                result+= hexa[i];
+            if(vv.size()==1){
+                vv.push_back('0');
             }
+            for (int i = 1; i >=0; --i) {
+                result+= vv[i];
+            }
+
 
             bool k = false;
             for (int i = 0; i < reg.size(); ++i) {
